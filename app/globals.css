@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Light theme variables (default) */
+  --background: #ffffff;
+  --foreground: #171717;
+  --textColor: #1f1d1d;
+  --aColor: rgb(1, 98, 196);
+
+  /* Fonts */
+  --font-headings: "Lora", serif;
+  --font-body: "Fira Code", monospace;
+}
+
+/* Dark theme variables when .dark class is present */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --textColor: #ededed;
+  --aColor: rgb(96, 165, 250);
+}
+
+/* Force light theme when .light class is present (overrides browser dark mode) */
+.light {
+  --background: #ffffff !important;
+  --foreground: #171717 !important;
+  --textColor: #1f1d1d !important;
+  --aColor: rgb(1, 98, 196) !important;
+  color-scheme: light !important;
+}
+
+/* Remove the media query that was causing conflicts */
+/* @media (prefers-color-scheme: dark) is removed */
+
+.font-headings {
+  font-family: var(--font-headings);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  /* Force the color scheme to respect our theme choice */
+  color-scheme: light dark;
+}
+
+/* Wavy underline effect for text selection */
+::selection {
+  background-color: rgba(96, 165, 250, 0.3);
+  backdrop-filter: blur(8px);
+  color: var(--foreground);
+}
+
+::-moz-selection {
+  background-color: rgba(96, 165, 250, 0.3);
+  backdrop-filter: blur(8px);
+  color: var(--foreground);
+}
+
+/* Force styles when in light mode to override browser dark mode */
+.light body {
+  background: var(--background) !important;
+  color: var(--foreground) !important;
+  color-scheme: light !important;
+}
+
+.dark body {
+  color-scheme: dark !important;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.font-roboto {
+  font-family: var(--font-roboto), sans-serif !important;
+}
+
+.font-noto-sans {
+  font-family: "Noto Sans", sans-serif !important;
+}
+
+.font-ibm-plex-serif {
+  font-family: "IBM Plex Serif", serif !important;
+}
+
+
+
+.nav-effect:hover  {
+  color: white;
+  background: black;
+
+}
+
+.dark .nav-effect:hover  {
+  color: black;
+  background: white;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.gallery-bg {
+  background: linear-gradient(to bottom right, #eff6ff, #dbeafe, #bfdbfe);
+}
+.dark .gallery-bg {
+  background: linear-gradient(to bottom right, #0f172a, #1e293b, #334155);
+}
+
+
+.gall-text1 { color: #1146b0; }
+.dark .gall-text1 { color: #bfdbfe; }
+
+/* 
+.gall-text2 { color: #1447e6; }
+.dark .gall-text2 { color: #93c5fd; } */
+
+.poems-text{
+  color: rgb(76, 74, 74);
+}
+.dark .poems-text{
+  color: rgb(199, 199, 199);
+}
+
+.bg-pot {
+  background: #f9fafb;
+}
+.dark .bg-pot {
+  background: #161718 !important;
+}
+
+.datee{
+  @apply text-gray-400 italic lg:text-[0.8rem];
+}

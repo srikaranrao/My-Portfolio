@@ -1,0 +1,137 @@
+"use client";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+
+export default function Gallery() {
+  const [imageList, setImageList] = useState([]);
+  
+  // Generate a list of images from the gallary folder where filenames are dates
+  useEffect(() => {
+    const generateImageList = () => {
+      const images = [];
+      
+      // List of images from the gallery folder with date-based filenames (oldest to newest)
+      const galleryImages = [
+        'SEP 2, 2024.jpg',
+        'DEC 5, 2024.jpg',
+        'DEC 14, 2024.jpg',
+        'JAN 4, 2025.jpg',
+        'JAN 29, 2025.jpg',
+        'FEB 13, 2025.jpg',
+        'FEB 19, 2025.jpg',
+        'FEB 22, 2025.jpg',
+        'MAR 1, 2025.jpg',
+        'MAR 14, 2025.jpg',
+       
+      ];
+      
+      galleryImages.forEach((filename, index) => {
+        // Extract date from filename (remove .jpg extension)
+        const dateFromFilename = filename.replace('.jpg', '');
+        
+        images.push({
+          id: index + 1,
+          src: `/gallery/${filename}`,
+          alt: `Memory from ${dateFromFilename}`,
+          date: dateFromFilename,
+          rotation: (Math.random() - 0.5) * 6 // Random rotation between -3 and 3 degrees
+        });
+      });
+      
+      return images;
+    };
+    
+    setImageList(generateImageList());
+  }, []);
+
+  return (
+    <div className="gallery-bg  min-h-screen  py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className=" text-4xl lg:text-5xl font-bold mb-4 gall-text1 font-serif">
+            Memory Gallery
+          </h1>
+          <p className="text-xs lg:text-base max-w-2xl mx-auto leading-relaxed">
+            A collection of moments frozen in time, preserved like vintage photographs 
+            from years gone by. Each memory tells a story worth remembering.
+          </p>
+        </div>
+
+        {/* Gallery Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {imageList.map((image) => (
+            <div
+              key={image.id}
+              className="photo-card group cursor-pointer"
+              style={{
+                transform: `rotate(${image.rotation}deg)`,
+                transition: 'all 0.3s ease-in-out'
+              }}
+            >
+              {/* Photo Card Container */}
+              <div className="relative bg-white p-4 shadow-xl rounded-sm border border-gray-200 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:rotate-0">
+                {/* Photo */}
+                <div className="relative aspect-[4/3] mb-3 overflow-hidden bg-gray-100">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover rounded-sm filter sepia-[0.1] contrast-[1.1] brightness-[0.95]"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                  
+                  {/* Vintage Photo Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-yellow-50/20 pointer-events-none"></div>
+                </div>
+                
+                {/* Date Stamp */}
+                <div className="text-center">
+                  <p className="text-xs font-mono text-gray-600 tracking-wide uppercase">
+                    {image.date}
+                  </p>
+                </div>
+                
+                {/* Photo edge wear effect */}
+                <div className="absolute inset-0 rounded-sm border-2 border-gray-300/50 pointer-events-none"></div>
+                
+                {/* Corner tape effect */}
+                <div className="absolute -top-1 -right-1 w-6 h-6 bg-blue-400/60 transform rotate-45 opacity-70"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer Note */}
+        <div className="text-center mt-16">
+          <p className="text-sm italic font-serif">
+            "Every picture tells a story, every moment is a treasure."
+          </p>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .photo-card:nth-child(odd) {
+          animation: float 6s ease-in-out infinite;
+        }
+        
+        .photo-card:nth-child(even) {
+          animation: float 6s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) rotate(var(--rotation));
+          }
+          50% {
+            transform: translateY(-5px) rotate(var(--rotation));
+          }
+        }
+        
+        .photo-card {
+          --rotation: attr(style);
+        }
+      `}</style>
+    </div>
+  );
+}
